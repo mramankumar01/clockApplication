@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Digital Clock</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .clock {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .day {
+            font-size: 35px;
+            text-align: center;
+            color: #555;
+        }
+
+        .date {
+            font-size: 25px;
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<!-- Display server-rendered time, day, and date initially -->
+<h1>Aman's clock ⏰</h1>
+<div class="clock" id="currentTime" th:text="${currentTime}">Loading...</div>
+<div class="day" id="currentDay" th:text="${currentDay}"></div>
+<div class="date" id="currentDate" th:text="${currentDate}"></div>
+
+<script>
+    function updateTime() {
+        var currentTime = new Date();
+        var time = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        var day = currentTime.toLocaleDateString("en-US", { weekday: 'long' });
+        var date = currentTime.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
+
+        document.getElementById("currentTime").textContent = time;
+        document.getElementById("currentDay").textContent = day;
+        document.getElementById("currentDate").textContent = date;
+    }
+
+    // Update time every second
+    setInterval(updateTime, 1000);
+    updateTime(); // Initial call on page load
+</script>
+</body>
+</html>
